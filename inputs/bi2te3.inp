@@ -1,0 +1,99 @@
+format 00002
+
+<case>
+slpf
+co3o4 # Title
+iv #pf or iv
+<end case>
+
+<debug control>
+10 #debug level - 1 = no raw data output to files
+<end debug control>
+
+<solver>
+1 #csp, 1=Lapack dense solver, 2=WASP Sparse(defunct), 3=SuperLU Sparse
+<end solver>
+
+<integration>
+0   # amr_o, AMR On = 1 AMR Off = 0
+10    # amr_d, AMR Divisions
+0     # cop, 0 = hartree-fock approx, 1=full potential
+0     # coe, Integration Sensing 0=off 1=on
+1e-4  # sc_dv, dV/V Voltage Change over Voltage
+1E-4  # sc_sb, Isb/Icb Subband Current Ratio
+1E-4  # sc_po, chg Change in potential
+1E-4  # sc_ip, inital chg, force higher convergence of inital calc
+2001  #NE, Number of energy steps 
+-0.2  #Eo, Minimux Potential Range
+1.0   #Ef, Maximum Potential Range
+1e-10 #an,  Target cell width, will mod based on energy range
+<end integration>
+
+<potential>
+2 # coc, 1=simple mixing; 2=anderson mixing
+0.2 #smix, simple mixing variable
+10.0 #wmix, anderson mix variable
+5 #Nank, number of previous vectors to keep, anderson mix
+<end potential>
+
+<strain>
+0 #sct, Strain Effects 0=off 1=on
+<end strain>
+
+<temperature>
+300 # Tp, Equilibrium temperature
+10 # dT, Temperature difference
+<end temperature>
+
+<restart>
+0 # Typ Rst
+10 # Tme Rst
+0  #Stp Rst
+<end restart>
+
+<voltage>
+20 # NV, Number of voltage steps 
+0.0 #Vo, Minimum voltage range
+0.1 #Vf, Maximum voltage range
+0.0 #Vneg
+-1  #Vpos 
+0.0 #Ineg 
+0.0 #Ipos 
+0.0 #Vmax 
+0.0 #Imax 
+0.0 #Imin
+31  #Nb, Number of Subbands
+<end voltage>
+
+<geometry>
+1 #Nl, Number of layers
+0 #Lg, Gradient
+1 #Lg_o, Material graded
+0 #Lc, Contact length
+<end geometry>
+
+<material1>
+1 #Mat 1=Co3O4
+2.5e-9 #Lb
+2.1e21 #Nd_Si, Doping concentration
+6.5e25 #Nc_Si, Effective density of states silicon
+100 #epsilrS, Relative permittivity for Silicon
+0.23 #ms, effective mass silicon ptype
+5.4307 #a0Si,  Silicon Lattice constant parallel to substrate 
+0.7713 #D001Si,  Silicon deformation potential 
+3.641 #G001Si, Silicon shear modulus
+9.16 #EdUSi, Deformation potential
+<end material1>
+
+<material2>
+1 #Mat 1=Bi2Te3, 2=Sb2Te3
+2.5e-9 #Lw
+3e19 #Nd_Ge
+3.4e25 #Nc_Ge, Effective density of states germanium
+55 #epsilrG, Relative permittivity for Germanium
+0.025 #mg, effective mass germanium
+5.6579 #a0Ge, Germanium Lattice constant parallel to substrate 
+0.7509 #D001Ge, Germanium deformation potential
+2.876 #G001Ge, Germanium shear modulus
+9.42 #EdUGe, Deformation potential
+<end material2>

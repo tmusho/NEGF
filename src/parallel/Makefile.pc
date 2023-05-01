@@ -1,0 +1,94 @@
+##Makefile Si/Ge/Si Superlattice
+##
+CC = gcc
+FC = mpif90.openmpi
+OPT = -O3 -Wall -g#-static -fast
+OPT2 = -O3 -Wall -fno-underscoring
+LIBS = /opt/acml4.4.0/gfortran64/lib/libacml.a /opt/acml4.4.0/gfortran64/lib/libacml_mv.a -lslatec  -lpthread -lm -L/home/convection/Downloads/SuperLU_4.1/lib -lsuperlu_4.1 /opt/acml4.4.0/gfortran64/lib/libacml.a /opt/acml4.4.0/gfortran64/lib/libacml_mv.a
+LIBS2 = -L/home/convection/Downloads/SuperLU_4.1/lib -lsuperlu_4.1
+OBJECTS = c_fortran_zgssv.o utility.o errors.o debug.o input.o inputformat.o readinput.o matxopt.o startup.o restart.o sparse.o energy_amr.o device.o hamil.o eigen.o anderson_mixing.o potent.o scatter.o utility.o output.o interpolate.o  negf_scatter.o mpinterface.o negf.o init.o main.o
+OBJECTS2 = c_fortran_zgssv.o
+INCLUDES = -I/opt/acml4.4.0/gfortran64/include 
+INCLUDES2 = -I/home/convection/Downloads/SuperLU_4.1/SRC/
+FFLAG = $(OPT) $(INCLUDES)
+CFLAG = $(OPT2) $(INCLUDES2)
+
+all:	${OBJECTS}
+	$(FC) $(FFLAG) *.o -o slpf $(LIBS) $(CLIBS)
+
+main.o:	slpf.f90
+	$(FC) $(FFLAG) -c slpf.f90 linspace.f90 
+
+device.o: device.f90
+	$(FC) $(FFLAG) -c device.f90
+
+hamil.o: hamil.f90
+	$(FC) $(FFLAG) -c hamil.f90
+
+init.o: init.f90
+	$(FC) $(FFLAG) -c init.f90
+
+negf.o: negf.f90
+	$(FC) $(FFLAG) -c negf.f90
+
+startup.o: startup.f90
+	$(FC) $(FFLAG) -c startup.f90
+
+eigen.o: eigen.f90
+	$(FC) $(FFLAG) -c eigen.f90
+
+debug.o: debug.f90
+	$(FC) $(FFLAG) -c debug.f90
+
+errors.o: errors.f90
+	$(FC) $(FFLAG) -c errors.f90
+
+potent.o: potent.f90
+	$(FC) $(FFLAG) -c potent.f90
+
+scatter.o: scatter.f90
+	$(FC) $(FFLAG) -c scatter.f90
+
+matxopt.o: matxopt.f90
+	$(FC) $(FFLAG) -c matxopt.f90
+
+energy_amr.o: energy_amr.f90
+	$(FC) $(FFLAG) -c energy_amr.f90
+
+anderson_mixing.o: anderson_mixing.f90
+	$(FC) $(FFLAG) -c anderson_mixing.f90
+
+utility.o: utility.f90
+	$(FC) $(FFLAG) -c utility.f90
+
+mpinterface.o: mpinterface.f90
+	$(FC) $(FFLAG) -c mpinterface.f90
+
+interpolate.o: interpolate.f90
+	$(FC) $(FFLAG) -c interpolate.f90
+
+input.o: input.f90
+	$(FC) $(FFLAG) -c input.f90
+
+readinput.o: readinput.f90
+	$(FC) $(FFLAG) -c readinput.f90
+
+inputformat.o: inputformat.f90
+	$(FC) $(FFLAG) -c inputformat.f90
+output.o: output.f90
+	$(FC) $(FFLAG) -c output.f90
+
+sparse.o: sparse.f90
+	$(FC) $(FFLAG) -c sparse.f90
+
+restart.o: restart.f90
+	$(FC) $(FFLAG) -c restart.f90
+
+c_fortran_zgssv.o: c_fortran_zgssv.c
+	$(CC) $(CFLAG) -c c_fortran_zgssv.c
+
+negf_scatter.o: negf_scatter.f90
+	$(FC) $(FFLAG) -c negf_scatter.f90
+
+clean:
+	rm slpf *.o *.mod *.dat fort.* *.out
